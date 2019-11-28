@@ -1,75 +1,87 @@
 import random
 
-class Generator:
+class Generator(object):
 
     def __init__(self):
+
+        # Lists for password composition
         self.numeric_list = "1234567890"
         self.alpha_list = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
         self.special_characters_list = "~!@#$%^&*()_+|}{;?><,./`"
         self.full_keyboard_list = "1234567890AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz~!@#$%^&*()_+|}{;?><,./`"
 
-    def randomPinGenerator(self, pin_length):
+    def randomPinGenerator(self, pin_quantity, pin_length):
 
         # OBJECTIVE: Generates a random pin with set length
 
-        # Create empty string
-        pin_suggestion = ""
+        # Execute for-loop based on pin_quantity
+        for i in range(pin_quantity):
 
-        # Execute loop based on pin_length times
-        for i in range(pin_length):
+            # Create empty string
+            pin_suggestion = ""
 
-            # Add randomly selected digit to string
-            pin_suggestion += random.choice(self.numeric_list)
+            # Execute for-loop based on pin_length
+            for _ in range(pin_length):
+                pin_suggestion += random.choice(self.numeric_list)
 
-        # Return suggestion
-        return pin_suggestion
+            # Print suggestion
+            print("{} - {}".format(i+1, pin_suggestion))
 
-    def randomAlphaGenerator(self, password_length):
+    def randomAlphaGenerator(self, alpha_quantity, alpha_length):
 
         # OBJECTIVE: Generates a random password with set length
 
-        # Create an empty string
-        alpha_suggestion = ""
+        # Execute for-loop based on pin_quantity
+        for i in range(alpha_quantity):
 
-        # Execute loop based on password_length times
-        for i in range(password_length):
+            # Create empty string
+            alpha_suggestion = ""
 
-            # Add randomly selected digit to string
-            alpha_suggestion += random.choice(self.alpha_list)
+            # Execute for-loop based on pin_length
+            for _ in range(alpha_length):
+                alpha_suggestion += random.choice(self.numeric_list)
 
-        # Return suggestion
-        return alpha_suggestion
+            # Print suggestion
+            print("{} - {}".format(i+1, alpha_suggestion))
 
-    def randomMixGenerator(self, password_length):
+    def randomMixGenerator(self, mix_quantity, mix_length):
 
         # OBJECTIVE: Generates a random password with a set length from all lists
 
-        # Create an empty string
-        mix_password_suggestion = ""
+        # Execute for-loop based on pin_quantity
+        for i in range(mix_quantity):
 
-        # Execute loop password_length times
-        for i in range(password_length):
+            # Create empty string
+            mix_suggestion = ""
 
-            # Select a random character, then add it to string
-            mix_password_suggestion += random.choice(self.full_keyboard_list)
+            # Execute for-loop based on pin_length
+            for _ in range(mix_length):
+                mix_suggestion += random.choice(self.numeric_list)
 
-        return mix_password_suggestion
+            # Print suggestion
+            print("{} - {}".format(i+1, mix_suggestion))
 
-    def passwordRequest(self, generator_selected, suggested_quantity, suggested_length):
+    def passwordRequest(self):
 
         # OBJECTIVE: Handle user's action and calls any function N times
 
-        if generator_selected == "Mix":
-            for i in range(suggested_quantity):
-                print(f'{i}. {self.randomMixGenerator(suggested_length)}')
+        # Ask for quantity of recommendations and password's quantity
+        password_type = input("Which kind of password? (Pin/Alpha/Mix) ")
 
-        elif generator_selected == "Alpha":
-            for i in range(suggested_quantity):
-                print(f'{i}. {self.randomAlphaGenerator(suggested_length)}')
+        if not (password_type in ["Pin", "Alpha", "Mix"]):
+            print("{} is an invalid request!".format(password_type))
+            return None
+        
+        password_quantity = input("How many suggestions? ")
+        password_quantity = int(password_quantity)
 
-        elif generator_selected == "Pin":
-            for i in range(suggested_quantity):
-                print(f'{i}. {self.randomPinGenerator(suggested_length)}')
+        password_length = input("How many characters? ")
+        password_length = int(password_length)
 
-        else:
-            print(f'Invalid request')
+        # If function is available, execute it
+        if password_type == "Pin":
+            self.randomPinGenerator(password_quantity, password_length)
+        elif password_type == "Alpha":
+            self.randomAlphaGenerator(password_quantity, password_length)
+        elif password_type == "Mix":
+            self.randomMixGenerator(password_quantity, password_length)
