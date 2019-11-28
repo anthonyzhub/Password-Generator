@@ -19,4 +19,4 @@ if __name__ == "__main__":
         if option_selected == "0":
             exit(1)
         elif option_selected == "1":
-            generator_class.passwordRequest()
+            generator_class.password_request()

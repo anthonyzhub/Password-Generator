@@ -1,5 +1,12 @@
 import random
 
+class OTP(object):
+
+    def __init__(self):
+        pass
+
+
+
 class Generator(object):
 
     def __init__(self):
@@ -10,7 +17,7 @@ class Generator(object):
         self.special_characters_list = "~!@#$%^&*()_+|}{;?><,./`"
         self.full_keyboard_list = "1234567890AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz~!@#$%^&*()_+|}{;?><,./`"
 
-    def randomPinGenerator(self, pin_quantity, pin_length):
+    def random_pin_generator(self, pin_quantity, pin_length):
 
         # OBJECTIVE: Generates a random pin with set length
 
@@ -27,9 +34,9 @@ class Generator(object):
             # Print suggestion
             print("{} - {}".format(i+1, pin_suggestion))
 
-    def randomAlphaGenerator(self, alpha_quantity, alpha_length):
+    def random_alpha_generator(self, alpha_quantity, alpha_length):
 
-        # OBJECTIVE: Generates a random password with set length
+        # OBJECTIVE: Generates a random alpha password with set length
 
         # Execute for-loop based on pin_quantity
         for i in range(alpha_quantity):
@@ -44,7 +51,7 @@ class Generator(object):
             # Print suggestion
             print("{} - {}".format(i+1, alpha_suggestion))
 
-    def randomMixGenerator(self, mix_quantity, mix_length):
+    def random_mix_generator(self, mix_quantity, mix_length):
 
         # OBJECTIVE: Generates a random password with a set length from all lists
 
@@ -61,7 +68,7 @@ class Generator(object):
             # Print suggestion
             print("{} - {}".format(i+1, mix_suggestion))
 
-    def passwordRequest(self):
+    def password_request(self):
 
         # OBJECTIVE: Handle user's action and calls any function N times
 
@@ -80,8 +87,8 @@ class Generator(object):
 
         # If function is available, execute it
         if password_type == "Pin":
-            self.randomPinGenerator(password_quantity, password_length)
+            self.random_pin_generator(password_quantity, password_length)
         elif password_type == "Alpha":
-            self.randomAlphaGenerator(password_quantity, password_length)
+            self.random_alpha_generator(password_quantity, password_length)
         elif password_type == "Mix":
-            self.randomMixGenerator(password_quantity, password_length)
+            self.random_mix_generator(password_quantity, password_length)
