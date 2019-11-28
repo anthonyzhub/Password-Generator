@@ -39,7 +39,7 @@ class Generator(object):
 
             # Execute for-loop based on pin_length
             for _ in range(alpha_length):
-                alpha_suggestion += random.choice(self.numeric_list)
+                alpha_suggestion += random.choice(self.alpha_list)
 
             # Print suggestion
             print("{} - {}".format(i+1, alpha_suggestion))
@@ -56,7 +56,7 @@ class Generator(object):
 
             # Execute for-loop based on pin_length
             for _ in range(mix_length):
-                mix_suggestion += random.choice(self.numeric_list)
+                mix_suggestion += random.choice(self.full_keyboard_list)
 
             # Print suggestion
             print("{} - {}".format(i+1, mix_suggestion))
