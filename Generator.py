@@ -2,12 +2,17 @@ import secrets
 import string
 import os
 
-class Cryptography_Class(object):
+# Lists for password composition
+# These list are global variables because both classes would be using them
+numeric_list = "1234567890"
+alpha_list = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
+special_characters_list = "~!@#$%^&*()_+|}{;?><,./`'"
+full_keyboard_list = "1234567890AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz~!@#$%^&*()_+|}{;?><,./`'"
+
+class Cryptography_Class:
 
     def __init__(self):
-
-        # full_keyboard_list[] is only implemented because this class only focuses on encrypting the message
-        self.full_keyboard_list = "1234567890AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz~!@#$%^&*()_+|}{;?><,./`'"
+        pass
 
     def generate_one_time_pad_sheets(self, num_of_sheets, sheets_length):
 
@@ -86,7 +91,7 @@ class Cryptography_Class(object):
         for position, character in enumerate(plain_text):
 
             # If character isn't in list, add it to current_cipher_text
-            if character not in self.full_keyboard_list:
+            if character not in full_keyboard_list:
                 current_cipher_text += character
             else:
                 # Get position of the character with sheet
@@ -97,10 +102,10 @@ class Cryptography_Class(object):
                 # 4. %81 -> self.full_keyboard_list has a totaly of 81 elements. A modulu is needed if the message is greater
                 # than 81 characters, so some characters will be reused
 
-                encrypted_character_result = (self.full_keyboard_list.index(character) + int(otp_sheet[position])) % 81
+                encrypted_character_result = (full_keyboard_list.index(character) + int(otp_sheet[position])) % 81
 
                 # Change number to letter
-                current_cipher_text += self.full_keyboard_list[encrypted_character_result]
+                current_cipher_text += full_keyboard_list[encrypted_character_result]
 
         if current_cipher_text is not None:
             print("Encryption is complete!")
@@ -121,11 +126,11 @@ class Cryptography_Class(object):
         for position, character in enumerate(cipher_text):
 
             # Same logic as above
-            if character not in self.full_keyboard_list:
+            if character not in full_keyboard_list:
                 plaintext += character
             else:
-                decrypted = (self.full_keyboard_list.index(character) - int(otp_sheet[position])) % 81
-                plaintext += self.full_keyboard_list[decrypted]
+                decrypted = (full_keyboard_list.index(character) - int(otp_sheet[position])) % 81
+                plaintext += full_keyboard_list[decrypted]
 
         if plaintext is not None:
             print("Successful decryption!")
@@ -155,17 +160,10 @@ class Cryptography_Class(object):
 
         pass
 
-
-
-class Generator(object):
+class Generator:
 
     def __init__(self):
-
-        # Lists for password composition
-        self.numeric_list = "1234567890"
-        self.alpha_list = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
-        self.special_characters_list = "~!@#$%^&*()_+|}{;?><,./`'"
-        self.full_keyboard_list = "1234567890AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz~!@#$%^&*()_+|}{;?><,./`'"
+        pass
 
     def random_pin_generator(self, pin_quantity, pin_length):
 
@@ -179,8 +177,7 @@ class Generator(object):
 
             # Execute for-loop based on pin_length
             for _ in range(pin_length):
-                # pin_suggestion += random.choice(self.numeric_list)
-                pin_suggestion += secrets.choice(self.numeric_list)
+                pin_suggestion += secrets.choice(numeric_list)
 
             # Print suggestion
             print("{} - {}".format(i+1, pin_suggestion))
@@ -197,8 +194,7 @@ class Generator(object):
 
             # Execute for-loop based on pin_length
             for _ in range(alpha_length):
-                # alpha_suggestion += random.choice(self.alpha_list)
-                alpha_suggestion += secrets.choice(self.alpha_list)
+                alpha_suggestion += secrets.choice(alpha_list)
 
             # Print suggestion
             print("{} - {}".format(i+1, alpha_suggestion))
@@ -215,8 +211,7 @@ class Generator(object):
 
             # Execute for-loop based on pin_length
             for _ in range(mix_length):
-                # mix_suggestion += random.choice(self.full_keyboard_list)
-                mix_suggestion += secrets.choice(self.full_keyboard_list)
+                mix_suggestion += secrets.choice(full_keyboard_list)
 
             # Print suggestion
             print("{} - {}".format(i+1, mix_suggestion))
@@ -229,9 +224,9 @@ class Generator(object):
         password_type = input("Password type? (Pin/Alpha/Mix) ")
 
         # If user's selection is not available, then don't continue
-        if  password_type not in ["Pin", "Alpha", "Mix"]:
+        if  password_type not in ["Pin", "pin", "Alpha", "alpha", "Mix", "mix"]:
             print("{} is an invalid request!".format(password_type))
-            return None
+            exit(1)
         
         password_quantity = input("How many suggestions? ")
         password_quantity = int(password_quantity)
@@ -240,9 +235,9 @@ class Generator(object):
         password_length = int(password_length)
 
         # If function is available, execute it
-        if password_type == "Pin":
+        if (password_type == "Pin") or (password_type == "pin"):
             self.random_pin_generator(password_quantity, password_length)
-        elif password_type == "Alpha":
+        elif password_type == "Alpha" or password_type == "alpha":
             self.random_alpha_generator(password_quantity, password_length)
-        elif password_type == "Mix":
+        elif password_type == "Mix" or password_type == "mix":
             self.random_mix_generator(password_quantity, password_length)
